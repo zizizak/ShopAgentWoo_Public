@@ -1,0 +1,3516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WooCommerce AI Sales Agent - Automate Consulting & Orders 24/7</title>
+    <meta name="description"
+        content="WooCommerce AI Sales Agent - An AI sales assistant running directly on WooCommerce websites, automatically consulting products, suggesting smart combos, closing orders 24/7, and tracking shipping bills. No monthly subscription fees.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Styling -->
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-glow: rgba(139, 92, 246, 0.15);
+            --primary-gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            --secondary: #06b6d4;
+            --secondary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.2);
+            --bg-dark: #070a13;
+            --bg-deep: #0b0f19;
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --card-border: rgba(255, 255, 255, 0.06);
+            --card-border-hover: rgba(139, 92, 246, 0.3);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --max-width: 1200px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        /* Utilities */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            gap: 8px;
+            font-family: var(--font-display);
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: #ffffff;
+            box-shadow: 0 4px 20px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .badge {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+
+        /* Header / Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            background: rgba(7, 10, 19, 0.8);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 12px 0;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px var(--primary-glow);
+            flex-shrink: 0;
+        }
+
+        .logo-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .nav-menu a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: 46px;
+            font-weight: 900;
+            line-height: 1.2;
+            letter-spacing: -1.2px;
+            margin-top: 16px;
+            margin-bottom: 24px;
+        }
+
+        .hero-desc {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 36px;
+            max-width: 540px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta {
+            margin-top: 40px;
+            display: flex;
+            gap: 32px;
+            border-top: 1px solid var(--card-border);
+            padding-top: 24px;
+        }
+
+        .meta-item h4 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .meta-item p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-glow-blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            z-index: 1;
+            filter: blur(20px);
+            animation: float-slow 8s ease-in-out infinite alternate;
+        }
+
+        /* Chat Widget Frame (Mockup) */
+        .hero-chat-mockup {
+            width: 100%;
+            max-width: 380px;
+            height: 520px;
+            background: var(--bg-deep);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 40px rgba(139, 92, 246, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+            position: relative;
+            backdrop-filter: blur(20px);
+            animation: float-normal 5s ease-in-out infinite alternate;
+        }
+
+        .mock-chat-header {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.8) 100%);
+            padding: 16px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mock-chat-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mock-chat-avatar {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #fff;
+            position: relative;
+        }
+
+        .mock-chat-avatar::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border: 2px solid var(--bg-deep);
+            border-radius: 50%;
+            animation: pulse-glow 2s infinite;
+        }
+
+        .mock-chat-title h5 {
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .mock-chat-title span {
+            font-size: 11px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .mock-chat-body {
+            flex-grow: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .mock-msg {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 13px;
+        }
+
+        .mock-msg.incoming {
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .mock-msg.outgoing {
+            background: var(--primary-gradient);
+            color: #fff;
+            border-bottom-right-radius: 4px;
+            align-self: flex-end;
+        }
+
+        .mock-product-carousel {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .mock-product-carousel::-webkit-scrollbar {
+            display: none;
+            /* Safari and Chrome */
+        }
+
+        .mock-product-card {
+            min-width: 140px;
+            width: 140px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .mock-product-card img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .mock-product-card h6 {
+            font-size: 11px;
+            margin: 6px 0 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mock-product-card span {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .mock-product-btn {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: #a78bfa;
+            font-size: 10px;
+            font-weight: 600;
+            width: 100%;
+            padding: 4px 0;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .mock-chat-footer {
+            padding: 12px 16px;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            gap: 8px;
+        }
+
+        .mock-chat-input {
+            flex-grow: 1;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 12px;
+            color: #fff;
+            outline: none;
+        }
+
+        .mock-chat-send {
+            width: 32px;
+            height: 32px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .mock-chat-send svg {
+            width: 14px;
+            height: 14px;
+            fill: #fff;
+            transform: rotate(45deg);
+        }
+
+        /* Core Values / Features Section */
+        .features {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 38px;
+            font-weight: 800;
+            margin-top: 12px;
+            margin-bottom: 18px;
+            letter-spacing: -1px;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 36px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            border-color: var(--card-border-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.05);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon-box {
+            width: 48px;
+            height: 48px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            color: #a78bfa;
+        }
+
+        .feature-icon-box svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .feature-card h3 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 20px;
+            color: var(--text-secondary);
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Architecture Section (Interactive SVG) */
+        .architecture {
+            padding: 80px 0;
+            background: var(--bg-deep);
+            border-top: 1px solid var(--card-border);
+            border-bottom: 1px solid var(--card-border);
+            position: relative;
+        }
+
+        .arch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .arch-content h3 {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .arch-content p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
+
+        .arch-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .arch-step-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            padding: 16px 20px;
+            border-radius: 12px;
+            display: flex;
+            gap: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .arch-step-item:hover,
+        .arch-step-item.active {
+            background: rgba(139, 92, 246, 0.05);
+            border-color: rgba(139, 92, 246, 0.2);
+            transform: translateX(5px);
+        }
+
+        .arch-step-num {
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .arch-step-item.active .arch-step-num {
+            background: var(--primary-gradient);
+            color: #fff;
+        }
+
+        .arch-step-txt h4 {
+            font-family: var(--font-display);
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .arch-step-txt p {
+            font-size: 13px;
+            margin-bottom: 0;
+            color: var(--text-secondary);
+        }
+
+        .arch-visual-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .arch-svg {
+            width: 100%;
+            height: auto;
+            max-width: 480px;
+        }
+
+        /* Live Simulator Section */
+        .simulator-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .sim-grid {
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            gap: 48px;
+            align-items: flex-start;
+        }
+
+        .sim-content {
+            position: sticky;
+            top: 100px;
+        }
+
+        .sim-tagline {
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .sim-scenarios {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .scenario-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .scenario-btn:hover {
+            border-color: var(--card-border-hover);
+            transform: translateY(-2px);
+            background: rgba(139, 92, 246, 0.03);
+        }
+
+        .scenario-btn.active {
+            border-color: var(--primary);
+            background: rgba(139, 92, 246, 0.05);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.1);
+        }
+
+        .scenario-btn h4 {
+            font-family: var(--font-display);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .scenario-btn p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .scenario-arrow {
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .scenario-btn:hover .scenario-arrow,
+        .scenario-btn.active .scenario-arrow {
+            background: var(--primary-gradient);
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        /* Simulator Console Container */
+        .sim-console-wrapper {
+            position: relative;
+        }
+
+        .sim-chat-box {
+            width: 100%;
+            height: 600px;
+            background: #0b0f19;
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sim-chat-header {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sim-chat-bot {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .sim-chat-avatar {
+            width: 42px;
+            height: 42px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+        }
+
+        .sim-chat-avatar::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 11px;
+            height: 11px;
+            background: var(--accent);
+            border: 2px solid #0b0f19;
+            border-radius: 50%;
+        }
+
+        .sim-chat-info h4 {
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .sim-chat-info span {
+            font-size: 12px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .sim-chat-info span::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .sim-chat-body {
+            flex-grow: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sim-msg {
+            max-width: 75%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 14px;
+            animation: message-in 0.3s ease forwards;
+        }
+
+        .sim-msg.incoming {
+            background: rgba(255, 255, 255, 0.04);
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .sim-msg.outgoing {
+            background: var(--primary-gradient);
+            color: #fff;
+            border-bottom-right-radius: 4px;
+            align-self: flex-end;
+        }
+
+        /* Products Carousel inside simulator */
+        .sim-carousel {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 8px 0;
+            margin: 6px 0;
+            scrollbar-width: thin;
+        }
+
+        .sim-carousel::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .sim-carousel::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .sim-product-card {
+            min-width: 180px;
+            width: 180px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 12px;
+            transition: var(--transition);
+        }
+
+        .sim-product-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .sim-product-img {
+            width: 100%;
+            height: 120px;
+            border-radius: 10px;
+            background-size: cover;
+            background-position: center;
+            background-color: rgba(255, 255, 255, 0.05);
+            margin-bottom: 10px;
+        }
+
+        .sim-product-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sim-product-price {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+
+        .sim-product-action {
+            width: 100%;
+            padding: 8px 0;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .sim-product-action:hover {
+            background: var(--primary-gradient);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .sim-combo-bar {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .sim-combo-info h5 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .sim-combo-info p {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .sim-combo-btn {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            border: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(6, 182, 212, 0.2);
+            transition: var(--transition);
+        }
+
+        .sim-combo-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(6, 182, 212, 0.3);
+        }
+
+        /* Tracking Card inside simulator */
+        .sim-tracking-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 6px;
+            width: 100%;
+        }
+
+        .sim-track-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+        }
+
+        .sim-track-id {
+            font-weight: 700;
+            color: var(--secondary);
+            font-size: 14px;
+        }
+
+        .sim-track-status {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent);
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .sim-track-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            padding-left: 16px;
+        }
+
+        .sim-track-timeline::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            bottom: 4px;
+            left: 4px;
+            width: 2px;
+            background: var(--card-border);
+        }
+
+        .sim-track-node {
+            position: relative;
+        }
+
+        .sim-track-node::after {
+            content: '';
+            position: absolute;
+            left: -16px;
+            top: 5px;
+            width: 8px;
+            height: 8px;
+            background: var(--text-muted);
+            border-radius: 50%;
+        }
+
+        .sim-track-node.active::after {
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        .sim-track-node-title {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .sim-track-node-time {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .sim-chat-footer {
+            padding: 16px 24px;
+            background: rgba(15, 23, 42, 0.4);
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: typing-dot 1.4s infinite ease-in-out both;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        /* Cart Floating Notification */
+        .cart-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            z-index: 1001;
+            transform: translateY(150px);
+            transition: var(--transition);
+            font-family: var(--font-display);
+            font-weight: 700;
+        }
+
+        .cart-notification.show {
+            transform: translateY(0);
+        }
+
+        .cart-notification svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+
+        /* Lite vs Pro Plan Section */
+        .pricing-section {
+            padding: 100px 0;
+            background: var(--bg-deep);
+            border-top: 1px solid var(--card-border);
+            position: relative;
+        }
+
+        .pricing-grid {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+        }
+
+        .pricing-card.premium {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.1);
+        }
+
+        .pricing-card.premium::before {
+            content: 'EARLY BIRD';
+            position: absolute;
+            top: 24px;
+            right: -60px;
+            background: var(--primary-gradient);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 6px 60px;
+            transform: rotate(45deg);
+            letter-spacing: 1px;
+        }
+
+        .pricing-header {
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 28px;
+            margin-bottom: 28px;
+        }
+
+        .pricing-header h3 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .pricing-price {
+            font-family: var(--font-display);
+            font-size: 40px;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin: 16px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .pricing-price span {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .pricing-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex-grow: 1;
+            margin-bottom: 36px;
+        }
+
+        .pricing-features li {
+            position: relative;
+            padding-left: 28px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 1px;
+            width: 18px;
+            height: 18px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .pricing-card:not(.premium) .pricing-features li::before {
+            background: rgba(148, 163, 184, 0.1);
+            color: var(--text-secondary);
+        }
+
+        .pricing-features li.disabled {
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .pricing-features li.disabled::before {
+            content: '✕';
+            background: rgba(239, 68, 68, 0.08);
+            color: #ef4444;
+        }
+
+        /* Timeline / How it works */
+        .setup-timeline {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .timeline-wrapper {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto 0;
+            padding-left: 32px;
+        }
+
+        .timeline-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            bottom: 8px;
+            left: 12px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 48px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -32px;
+            top: 4px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .timeline-item:nth-child(2) .timeline-dot {
+            border-color: var(--secondary);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+        }
+
+        .timeline-item:nth-child(3) .timeline-dot {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline-content h3 {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .timeline-code {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            margin-top: 12px;
+            overflow-x: auto;
+            color: #e2e8f0;
+        }
+
+        /* Footer */
+        footer {
+            background: #04060c;
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo-desc p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 16px;
+            max-width: 280px;
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-display);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+            padding-left: 4px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--card-border);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Animations */
+        @keyframes float-slow {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                transform: translateY(-15px) scale(1.05);
+            }
+        }
+
+        @keyframes float-normal {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        @keyframes message-in {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes typing-dot {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+            }
+
+            30% {
+                transform: translateY(-4px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .nav-menu {
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 40px;
+            }
+
+            .hero-desc {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-meta {
+                justify-content: center;
+            }
+
+            .hero-chat-mockup {
+                margin: 0 auto;
+            }
+
+            .arch-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sim-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sim-content {
+                position: relative;
+                top: 0;
+                margin-bottom: 32px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 34px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo span {
+                font-size: 16px;
+            }
+            .logo-icon {
+                width: 32px;
+                height: 32px;
+                border-radius: 8px;
+            }
+            .logo-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+            .nav-actions .btn {
+                padding: 10px 18px;
+                font-size: 13px;
+            }
+        }
+
+        /* AI Business Model Section */
+        .business-model-section {
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, rgba(139, 92, 246, 0.02) 50%, var(--bg-dark) 100%);
+            border-top: 1px solid var(--card-border);
+            position: relative;
+        }
+
+        .bm-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .bm-card {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            transition: var(--transition);
+        }
+
+        .bm-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--card-border-hover);
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.05);
+        }
+
+        .bm-card-image {
+            margin-top: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .bm-card-image:hover {
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        .ai-cost-img {
+            width: 100%;
+            display: block;
+            opacity: 0.9;
+            transition: var(--transition);
+        }
+
+        .ai-cost-img:hover {
+            opacity: 1;
+        }
+
+        .bm-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .bm-icon-wrapper {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a78bfa;
+            font-size: 24px;
+        }
+
+        .bm-card h3 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .bm-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .bm-badge-metric {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: var(--font-display);
+        }
+
+        .bm-badge-metric.cost {
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--secondary);
+            border-color: rgba(6, 182, 212, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .bm-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Social Proof / Testimonials */
+        .testimonials-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 32px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .testimonial-card:hover {
+            border-color: var(--card-border-hover);
+            transform: translateY(-5px);
+        }
+
+        .testimonial-stars {
+            color: #f59e0b;
+            font-size: 14px;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            flex-grow: 1;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-top: 1px solid var(--card-border);
+            padding-top: 16px;
+        }
+
+        .testimonial-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .testimonial-info h5 {
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .testimonial-info span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 992px) {
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 40px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .faq-item:hover {
+            border-color: var(--card-border-hover);
+        }
+
+        .faq-question {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            transition: var(--transition);
+        }
+
+        .faq-question:hover {
+            color: #a78bfa;
+        }
+
+        .faq-arrow {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            color: var(--text-secondary);
+            margin-left: 12px;
+        }
+
+        .faq-item.open .faq-arrow {
+            transform: rotate(180deg);
+            color: #a78bfa;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+        }
+
+        .faq-answer-inner {
+            padding: 0 24px 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            position: relative;
+            text-align: center;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(99, 102, 241, 0.04) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 32px;
+            padding: 64px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(139, 92, 246, 0.05), transparent 60%);
+            animation: float-slow 10s ease-in-out infinite alternate;
+        }
+
+        .cta-box h2 {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-box p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .lang-switch {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            background: rgba(255, 255, 255, 0.02);
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .lang-switch:hover {
+            color: var(--text-primary);
+            border-color: var(--card-border-hover);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Cost Comparison Table styling */
+        .cost-comparison-card {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 32px;
+            margin-top: 40px;
+            backdrop-filter: blur(12px);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cost-comparison-card h4 {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comp-th, .comp-td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .comp-th {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--text-secondary);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .comp-td {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .comp-td strong {
+            color: #fff;
+        }
+
+        .comp-highlight {
+            color: var(--accent);
+            font-weight: 700;
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        /* Case Study section */
+        .case-study-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .case-study-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 48px;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .case-study-media {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 32px;
+            backdrop-filter: blur(12px);
+        }
+
+        .case-study-media h4 {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .case-study-media p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .case-study-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .cs-tag {
+            background: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            color: #a78bfa;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .case-study-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .cs-stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .cs-stat-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .cs-stat-val {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .cs-stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* ROI Calculator Styling */
+        .roi-section {
+            padding: 100px 0;
+            position: relative;
+            border-top: 1px solid var(--card-border);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .roi-card {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 48px;
+            backdrop-filter: blur(12px);
+            max-width: 1000px;
+            margin: 40px auto 0;
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .roi-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .roi-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .roi-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .roi-label-row span {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .roi-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+
+        .roi-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .roi-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .roi-result-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roi-result-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .roi-result-title {
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .roi-result-val {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .roi-result-sub {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 992px) {
+            .case-study-grid {
+                grid-template-columns: 1fr;
+            }
+            .roi-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .roi-card {
+                padding: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header id="header">
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12c0 1.86.5 3.61 1.39 5.11L2 22l5.09-1.37C8.54 21.13 10.21 21.5 12 21.5c5.52 0 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z" />
+                    </svg>
+                </div>
+                <span>WooCommerce AI Sales Agent</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#business-value">Benefits</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="https://esimviet.vn/" target="_blank">Demo</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="index.html" class="lang-switch">VI</a>
+                <a href="https://snapabase.lemonsqueezy.com/checkout/buy/30cd3975-a224-4a17-909b-f1ea9eeff243" target="_blank" class="btn btn-primary" id="nav-cta">Buy Now</a>
+            </div>
+        </div>
+    </header>
+ 
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <span class="badge">🤖 AI SALES PLUGIN FOR WOOCOMMERCE</span>
+                    <h1 class="hero-title">AI Sales Agent<br><span
+                            class="gradient-text">Every conversation is a sales opportunity.</span></h1>
+                    <p class="hero-desc">Product counseling, combo recommendations, and automated 24/7 customer shopping support.</p>
+                    <div class="hero-buttons">
+                        <a href="https://esimviet.vn/" target="_blank" class="btn btn-primary" id="hero-btn-demo">
+                            Try It Now
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="hero-meta">
+                        <div class="meta-item">
+                            <h4>$0</h4>
+                            <p>Monthly Subscription Fee</p>
+                        </div>
+                        <div class="meta-item">
+                            <h4>24/7</h4>
+                            <p>Automated Counseling</p>
+                        </div>
+                        <div class="meta-item">
+                            <h4>$0.002</h4>
+                            <p>AI Cost Per Conversation</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-glow-blob"></div>
+                    <!-- Mock Chat Widget Preview -->
+                    <div class="hero-chat-mockup">
+                        <div class="mock-chat-header">
+                            <div class="mock-chat-profile">
+                                <div class="mock-chat-avatar">AI</div>
+                                <div class="mock-chat-title">
+                                    <h5>WooCommerce AI Sales Agent</h5>
+                                    <span>Active</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mock-chat-body" id="hero-chat-body">
+                            <div class="mock-msg incoming">
+                                Hello! How can I help you today? Are you looking for any specific products?
+                            </div>
+                            <div class="mock-msg outgoing">
+                                Help me find an eSIM for traveling to Thailand.
+                            </div>
+                            <div class="mock-msg incoming">
+                                I have found the perfect matches for you! Here is our top recommendation:
+                                <div class="mock-product-carousel">
+                                    <div class="mock-product-card">
+                                        <div
+                                            style="background-color: #1e293b; height: 90px; border-radius: 8px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#a78bfa;">
+                                            THAILAND 5G</div>
+                                        <h6>Thailand Travel eSIM</h6>
+                                        <span>199,000 VND</span>
+                                        <button class="mock-product-btn">Buy now</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mock-chat-footer">
+                            <input type="text" class="mock-chat-input" placeholder="Type a message..." disabled>
+                            <button class="mock-chat-send" disabled>
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Business Model Impact -->
+        <section class="business-model-section" id="business-value">
+            <div class="container">
+                <div class="section-header">
+                    <span class="badge">REVOLUTIONARY BUSINESS MODEL</span>
+                    <h2 class="section-title">4 Reasons WooCommerce Shop Owners Choose WooCommerce AI Sales Agent</h2>
+                    <p class="section-desc">WooCommerce AI Sales Agent does not just answer questions — it actively
+                        drives the sales process to deliver 4 key financial impacts for your business:</p>
+                </div>
+                <div class="bm-grid">
+                    <!-- BM Card 1 -->
+                    <div class="bm-card">
+                        <div class="bm-badge-metric cost">Save 90%</div>
+                        <div class="bm-card-header">
+                            <div class="bm-icon-wrapper">💰</div>
+                            <h3>Optimize Costs & Superior ROI</h3>
+                        </div>
+                        <p>Replace the expensive recurring monthly subscription models of SaaS solutions (Zendesk,
+                            Intercom, Tidio) with a cost-effective annual subscription. You pay a low yearly license and your actual AI API usage (about
+                            $0.002 per conversation), maximizing your operating margins.</p>
+                        <div class="bm-card-image">
+                            <img src="ai-cost.png" alt="Real API Usage Cost Dashboard" class="ai-cost-img">
+                        </div>
+                    </div>
+
+                    <!-- BM Card 2 -->
+                    <div class="bm-card">
+                        <div class="bm-badge-metric">+15% - 30%</div>
+                        <div class="bm-card-header">
+                            <div class="bm-icon-wrapper">🚀</div>
+                            <h3>Boost Average Order Value (AOV)</h3>
+                        </div>
+                        <p>The AI agent analyzes the chat context in real-time to recommend 1-Click Smart Combos (cross-selling/upselling)
+                            tailored to each visitor. This automatically raises your average order value (AOV).</p>
+                    </div>
+
+                    <!-- BM Card 3 -->
+                    <div class="bm-card">
+                        <div class="bm-badge-metric">1-Click</div>
+                        <div class="bm-card-header">
+                            <div class="bm-icon-wrapper">🎯</div>
+                            <h3>Optimize Conversion Rate (CR)</h3>
+                        </div>
+                        <p>Customers can search products, add to cart, and checkout directly inside the chat widget without switching screens.</p>
+                    </div>
+
+                    <!-- BM Card 4 -->
+                    <div class="bm-card">
+                        <div class="bm-badge-metric">100% Owned</div>
+                        <div class="bm-card-header">
+                            <div class="bm-icon-wrapper">🛡️</div>
+                            <h3>Complete Data Ownership</h3>
+                        </div>
+                        <p>All customer data and chat history are saved on your own website. You retain complete data ownership without depending on third-party SaaS platforms.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Case Study / Performance Section -->
+        <section class="case-study-section" id="case-study">
+            <div class="container">
+                <div class="section-header">
+                    <span class="badge">REAL METRICS</span>
+                    <h2 class="section-title">Case Study: Proven Performance</h2>
+                    <p class="section-desc">Actual operational data proving the efficiency of WooCommerce AI Sales Agent.</p>
+                </div>
+                <div class="case-study-grid">
+                    <div class="case-study-media">
+                        <div class="case-study-tags">
+                            <span class="cs-tag">WooCommerce</span>
+                            <span class="cs-tag">eSIM Online Shop</span>
+                            <span class="cs-tag">Automated Sales</span>
+                        </div>
+                        <h4>International eSIM Store</h4>
+                        <p>A digital products store selling travel eSIMs with high traffic and diverse regional options. Before using WooCommerce AI Sales Agent, they frequently lost potential customers at night and during peak hours due to slow support responses.</p>
+                        <p>After integrating WooCommerce AI Sales Agent directly with WooCommerce, the virtual assistant automated the entire customer journey from recommending travel data packages to one-click purchases.</p>
+                    </div>
+                    <div class="case-study-stats">
+                        <div class="cs-stat-card">
+                            <div class="cs-stat-val gradient-text">2,300</div>
+                            <div class="cs-stat-label">Products Indexed by AI</div>
+                        </div>
+                        <div class="cs-stat-card">
+                            <div class="cs-stat-val gradient-text">78%</div>
+                            <div class="cs-stat-label">Inquiries Automated by AI</div>
+                        </div>
+                        <div class="cs-stat-card">
+                            <div class="cs-stat-val gradient-text">-60%</div>
+                            <div class="cs-stat-label">Customer Support Time Saved</div>
+                        </div>
+                        <div class="cs-stat-card">
+                            <div class="cs-stat-val gradient-text">24/7</div>
+                            <div class="cs-stat-label">Active Support Without Agents</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Advantages Grid -->
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <span class="badge">GROWTH SOLUTION</span>
+                    <h2 class="section-title">A Dedicated 24/7 AI Salesperson</h2>
+                    <p class="section-desc">6 premium features delivering a smart advisory experience, visual product display, and frictionless checkout for your shoppers.</p>
+                </div>
+                <div class="features-grid">
+                    <!-- Feature 1 -->
+                    <div class="feature-card">
+                        <div class="feature-icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                        <h3>Never Miss After-Hours Customers</h3>
+                        <p>AI Assistant responds instantly, answering product, size, and color questions accurately like a professional salesperson.</p>
+                        <ul class="feature-list">
+                            <li>Instant response in under 1 second</li>
+                            <li>Natural counseling aligned with shopper needs</li>
+                            <li>Context-aware and multilingual support — powered by LLMs (Large Language Models)</li>
+                        </ul>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="feature-card">
+                        <div class="feature-icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                            </svg>
+                        </div>
+                        <h3>Boost Order Value with Smart Combos</h3>
+                        <p>AI intelligently detects opportunities to suggest matching products or build tailored bundles, encouraging shoppers to buy more.</p>
+                        <ul class="feature-list">
+                            <li>Context-aware Smart Combo recommendations</li>
+                            <li>"Buy Bundle" button for high-speed checkout</li>
+                            <li>Significantly increase Average Order Value (AOV)</li>
+                        </ul>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="feature-card">
+                        <div class="feature-icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </div>
+                        <h3>Find Products Simply by Chatting</h3>
+                        <p>Customers just type naturally (e.g., "cool beach shirts"), and AI instantly searches the database and displays cards in a carousel.</p>
+                        <ul class="feature-list">
+                            <li>Understand typos, slang, and informal language</li>
+                            <li>Vivid product display inside the chat widget</li>
+                            <li>Add to cart with a single click</li>
+                        </ul>
+                    </div>
+                    <!-- Feature 4 -->
+                    <div class="feature-card">
+                        <div class="feature-icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </div>
+                        <h3>Secure Shipping Bill Lookup</h3>
+                        <p>Shoppers enter their order ID to track shipping progress (GHTK, GHN, etc.) securely by matching their purchase email.</p>
+                        <ul class="feature-list">
+                            <li>Shoppers actively track orders anytime</li>
+                            <li>Reduce post-sale support load by up to 80%</li>
+                            <li>Secure verification to protect customer data</li>
+                        </ul>
+                    </div>
+                    <!-- Feature 5 -->
+                    <div class="feature-card">
+                        <div class="feature-icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                        </div>
+                        <h3>Save 90% in Software Costs</h3>
+                        <p>Say goodbye to expensive SaaS chat tools billing by user count or conversation volume. Just self-host and pay-as-you-go.</p>
+                        <ul class="feature-list">
+                            <li>No monthly recurring fees</li>
+                            <li>Utilize cost-effective AI models (GPT-4o mini, etc.)</li>
+                            <li>Full code ownership and absolute control</li>
+                        </ul>
+                    </div>
+                    <!-- Feature 6 -->
+                    <div class="feature-card">
+                        <div class="feature-icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3>Data Privacy & Compliance</h3>
+                        <p>All chat logs and customer info stay safe inside your own MySQL database. Automatically mask sensitive info before sending it to AI.</p>
+                        <ul class="feature-list">
+                            <li>Complete ownership of chat logs & CRM data</li>
+                            <li>Automatically hide passwords & credit card numbers</li>
+                            <li>Full compliance with local privacy standards</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROI Calculator Section -->
+        <section class="roi-section" id="roi-calculator">
+            <div class="container">
+                <div class="section-header">
+                    <span class="badge">ROI CALCULATOR</span>
+                    <h2 class="section-title">Calculate Your Added Revenue with WooCommerce AI Sales Agent</h2>
+                    <p class="section-desc">Adjust the metrics below to estimate your monthly revenue gains when optimizing conversions with the AI assistant.</p>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-grid">
+                        <div class="roi-inputs">
+                            <!-- Input 1 -->
+                            <div class="roi-input-group">
+                                <div class="roi-label-row">
+                                    <label for="roi-traffic">Daily Website Visitors</label>
+                                    <span id="val-traffic">1,000 visitors</span>
+                                </div>
+                                <input type="range" class="roi-slider" id="roi-traffic" min="100" max="10000" step="100" value="1000">
+                            </div>
+                            <!-- Input 2 -->
+                            <div class="roi-input-group">
+                                <div class="roi-label-row">
+                                    <label for="roi-cr">Current Conversion Rate (CR)</label>
+                                    <span id="val-cr">2%</span>
+                                </div>
+                                <input type="range" class="roi-slider" id="roi-cr" min="0.5" max="10" step="0.1" value="2">
+                            </div>
+                            <!-- Input 3 -->
+                            <div class="roi-input-group">
+                                <div class="roi-label-row">
+                                    <label for="roi-aov">Average Order Value (AOV)</label>
+                                    <span id="val-aov">$20</span>
+                                </div>
+                                <input type="range" class="roi-slider" id="roi-aov" min="5" max="200" step="5" value="20">
+                            </div>
+                        </div>
+                        <div class="roi-result-card">
+                            <div class="roi-result-title">Monthly Added Revenue</div>
+                            <div class="roi-result-val gradient-text" id="roi-output-val">+$1,200.00</div>
+                            <div class="roi-result-sub">
+                                <p><i>Assuming WooCommerce AI Sales Agent increases your conversion rate by a conservative 10% relative gain (e.g. from 2% to 2.2% CR).</i></p>
+                                <p style="margin-top: 12px; color: var(--accent); font-weight: 600;">Estimated AI API cost: ~$6.00 / month (only $0.002 per conversation)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Chat Simulator Section -->
+        <section class="simulator-section" id="simulator">
+            <div class="container sim-grid">
+                <div class="sim-content">
+                    <span class="sim-tagline">REAL EXPERIENCE</span>
+                    <h2 class="section-title">Live Demo: AI Sales Agent Experience</h2>
+                    <p class="section-desc">Click the sample scenarios below to see how the AI processes requests in real-time inside the chat widget on the right.</p>
+
+                    <div class="sim-scenarios">
+                        <!-- Scenario 1 -->
+                        <div class="scenario-btn active" id="scen-1">
+                            <div>
+                                <h4>🔍 1-Click Search & Purchase</h4>
+                                <p>Ask the AI assistant to search for a Thailand eSIM and add it to the cart.</p>
+                            </div>
+                            <div class="scenario-arrow">➔</div>
+                        </div>
+                        <!-- Scenario 2 -->
+                        <div class="scenario-btn" id="scen-2">
+                            <div>
+                                <h4>📦 Simulated Order Tracking</h4>
+                                <p>Provide Order ID #1289 and email to query shipment history.</p>
+                            </div>
+                            <div class="scenario-arrow">➔</div>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="scenario-btn" id="scen-3">
+                            <div>
+                                <h4>🎁 Revenue Bundling Recommendation</h4>
+                                <p>Ask for a budget-friendly Southeast Asia travel combo suggestion.</p>
+                            </div>
+                            <div class="scenario-arrow">➔</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sim-console-wrapper">
+                    <!-- Dynamic Simulated Chat Widget -->
+                    <div class="sim-chat-box">
+                        <div class="sim-chat-header">
+                            <div class="sim-chat-bot">
+                                <div class="sim-chat-avatar">SA</div>
+                                <div class="sim-chat-info">
+                                    <h4>WooCommerce AI Sales Agent</h4>
+                                    <span>Online • Responds Instantly</span>
+                                </div>
+                            </div>
+                            <div
+                                style="font-size: 11px; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 6px; border: 1px solid var(--card-border);">
+                                Demo Unit</div>
+                        </div>
+
+                        <div class="sim-chat-body" id="sim-chat-container">
+                            <!-- Welcome Message -->
+                            <div class="sim-msg incoming">
+                                Welcome to WooCommerce AI Sales Agent! I am your assistant for looking up products and tracking orders. How can I help you today?
+                            </div>
+                        </div>
+
+                        <div class="sim-chat-footer">
+                            <input type="text" class="mock-chat-input" id="sim-chat-input"
+                                placeholder="Select a scenario on the left or type your message here..." autocomplete="off">
+                            <button class="mock-chat-send" id="sim-chat-send">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section class="pricing-section" id="pricing">
+            <div class="container">
+                <div class="section-header">
+                    <span class="badge">SPECIAL OFFER PRICING</span>
+                    <h2 class="section-title">Best Value - Fully Featured</h2>
+                    <p class="section-desc">WooCommerce AI Sales Agent comes in a single, fully-featured edition, helping you automate sales 24/7 and keep complete control of your data.</p>
+                </div>
+
+                <div class="pricing-grid">
+                    <!-- Premium Plan Card -->
+                    <div class="pricing-card premium" style="max-width: 600px; width: 100%;">
+                        <div class="pricing-header">
+                            <h3>PRO Annual Package</h3>
+                            <p>Fully featured with premium capabilities tailored for your WooCommerce store.</p>
+                            <div class="pricing-price">
+                                $49 <span style="font-size: 16px; text-decoration: line-through; color: var(--text-muted); margin-left: 8px;">$69</span>
+                                <span style="font-size: 14px; margin-left: 4px;">/ Year</span>
+                            </div>
+                            <p style="color: var(--accent); font-size: 13px; font-weight: 600; margin-bottom: 12px;">🔥 Early Bird Special Offer</p>
+                            <a href="https://snapabase.lemonsqueezy.com/checkout/buy/30cd3975-a224-4a17-909b-f1ea9eeff243" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Buy Now</a>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><strong>Unlimited</strong> consulting conversations per month</li>
+                            <li><strong>Sync whole catalog</strong> without product limits</li>
+                            <li><strong>Full variable product</strong> support (size, colors, variants)</li>
+                            <li><strong>Smart Combo recommendations</strong> to boost cross-sales</li>
+                            <li><strong>Stable Edge deployment</strong> handles thousands of concurrent users</li>
+                            <li><strong>Direct shipping progress tracking</strong> (HPOS integration)</li>
+                            <li><strong>24h cart hold</strong> protecting stock numbers</li>
+                            <li>Automatic <strong>PII security filtering</strong> to mask customer data</li>
+                            <li>Token compression <strong>saving 70% of AI API costs</strong></li>
+                            <li>Revenue analytics dashboard & full chat history audit</li>
+                            <li>Fully remove "Powered by WooCommerce AI Sales Agent" branding</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="cost-comparison-card">
+                    <h4>Cost Comparison Table</h4>
+                    <table class="comp-table">
+                        <thead>
+                            <tr>
+                                <th class="comp-th">Sales Solutions</th>
+                                <th class="comp-th">Operating Costs</th>
+                                <th class="comp-th">Payment Model</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="comp-td"><strong>Tidio</strong></td>
+                                <td class="comp-td">$25 - $100 / month</td>
+                                <td class="comp-td">Recurring monthly subscription</td>
+                            </tr>
+                            <tr>
+                                <td class="comp-td"><strong>Zendesk</strong></td>
+                                <td class="comp-td">$50 - $250 / month</td>
+                                <td class="comp-td">Recurring monthly subscription</td>
+                            </tr>
+                            <tr>
+                                <td class="comp-td"><strong>Intercom</strong></td>
+                                <td class="comp-td">$99 - $499 / month</td>
+                                <td class="comp-td">Recurring monthly subscription</td>
+                            </tr>
+                            <tr class="comp-highlight">
+                                <td class="comp-td"><strong>WooCommerce AI Sales Agent</strong></td>
+                                <td class="comp-td">$49 / year (Early Bird)</td>
+                                <td class="comp-td">Annual subscription (save 90% vs SaaS)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Setup Timeline Steps -->
+        <section class="setup-timeline">
+            <div class="container">
+                <div class="section-header">
+                    <span class="badge">FAST DEPLOYMENT</span>
+                    <h2 class="section-title">3 Steps to Automate Sales with AI</h2>
+                    <p class="section-desc">No complex coding required. You can deploy WooCommerce AI Sales Agent in under 10 minutes.</p>
+                </div>
+
+                <div class="timeline-wrapper">
+                    <!-- Step 1 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Step 1: Activate the Plugin</h3>
+                            <p>Upload and activate the WooCommerce AI Sales Agent plugin in your WordPress admin dashboard in seconds.</p>
+                        </div>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Step 2: Sync Your Catalog</h3>
+                            <p>Input your AI API Key and click sync. The AI agent immediately learns your products, prices, and sizes to prepare for inquiries.</p>
+                        </div>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Step 3: Sell Automatically</h3>
+                            <p>The AI widget appears on your storefront, ready to consult, offer combos, and close orders 24/7.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Architecture Section (For Technical Minds Only) -->
+        <section class="architecture" id="architecture">
+            <div class="container">
+                <div class="arch-grid">
+                    <div class="arch-content">
+                        <span class="badge">SYSTEM ARCHITECTURE</span>
+                        <h3>For Technical Minds Only</h3>
+                        <p>High-speed, secure, and self-hosted architecture that lets ShopAgent AI operate directly on your WordPress/WooCommerce infrastructure:</p>
+                        <div class="arch-steps">
+                            <div class="arch-step-item active" data-step="1">
+                                <div class="arch-step-num">1</div>
+                                <div class="arch-step-txt">
+                                    <h4>Shopper Asks Questions</h4>
+                                    <p>Visitor asks naturally: "Show me some eSIM options for traveling to Thailand."</p>
+                                </div>
+                            </div>
+                            <div class="arch-step-item" data-step="2">
+                                <div class="arch-step-num">2</div>
+                                <div class="arch-step-txt">
+                                    <h4>AI Recommends Matches</h4>
+                                    <p>AI searches the catalog and shows the best matches via rich visual carousel cards.</p>
+                                </div>
+                            </div>
+                            <div class="arch-step-item" data-step="3">
+                                <div class="arch-step-num">3</div>
+                                <div class="arch-step-txt">
+                                    <h4>1-Click Checkout</h4>
+                                    <p>Customer clicks "Buy Now" or "Buy Combo" inside the chat widget without page reloads.</p>
+                                </div>
+                            </div>
+                            <div class="arch-step-item" data-step="4">
+                                <div class="arch-step-num">4</div>
+                                <div class="arch-step-txt">
+                                    <h4>Self-Service Tracking</h4>
+                                    <p>After ordering, customers return to verify delivery progress easily anytime.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="arch-visual-container">
+                        <!-- Interactive SVG Diagram -->
+                        <svg class="arch-svg" viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg"
+                            id="arch-svg-diagram">
+                            <!-- Background Grid Elements -->
+                            <rect x="10" y="10" width="380" height="460" rx="15" fill="none"
+                                stroke="rgba(255,255,255,0.03)" stroke-width="2" />
+
+                            <!-- Nodes -->
+                            <!-- Browser Node -->
+                            <g id="node-browser" transform="translate(40, 40)">
+                                <rect width="320" height="60" rx="10" fill="#1e293b" stroke="rgba(255,255,255,0.1)"
+                                    stroke-width="1" />
+                                <text x="160" y="36" fill="#fff" font-family="Plus Jakarta Sans" font-size="14"
+                                    font-weight="700" text-anchor="middle">Visitor Browsing Website</text>
+                            </g>
+
+                            <!-- Cloudflare Worker Node -->
+                            <g id="node-cf" transform="translate(40, 180)">
+                                <rect width="320" height="60" rx="10" fill="#8b5cf6" fill-opacity="0.15"
+                                    stroke="#8b5cf6" stroke-width="1.5" />
+                                <text x="160" y="36" fill="#c7d2fe" font-family="Plus Jakarta Sans" font-size="14"
+                                    font-weight="700" text-anchor="middle">AI Sales Assistant</text>
+                            </g>
+
+                            <!-- AI Provider / LLM Node -->
+                            <g id="node-llm" transform="translate(20, 320)">
+                                <rect width="160" height="60" rx="10" fill="#1e293b" stroke="rgba(255,255,255,0.05)"
+                                    stroke-width="1" />
+                                <text x="80" y="36" fill="#94a3b8" font-family="Plus Jakarta Sans" font-size="13"
+                                    font-weight="600" text-anchor="middle">AI Models (LLMs)</text>
+                            </g>
+
+                            <!-- WordPress Node -->
+                            <g id="node-wp" transform="translate(220, 320)">
+                                <rect width="160" height="60" rx="10" fill="#0f172a" stroke="rgba(255,255,255,0.05)"
+                                    stroke-width="1" />
+                                <text x="80" y="36" fill="#94a3b8" font-family="Plus Jakarta Sans" font-size="13"
+                                    font-weight="600" text-anchor="middle">Your Store Database</text>
+                            </g>
+
+                            <!-- Connector Lines (Paths for animation) -->
+                            <!-- Path 1: Browser -> CF -->
+                            <path id="path-1" d="M200,100 L200,170" stroke="rgba(255,255,255,0.15)" stroke-width="2"
+                                fill="none" marker-end="url(#arrow)" />
+
+                            <!-- Path 2: CF -> LLM -->
+                            <path id="path-2" d="M120,240 L100,310" stroke="rgba(255,255,255,0.15)" stroke-width="2"
+                                fill="none" marker-end="url(#arrow)" />
+
+                            <!-- Path 3: CF -> WP (Tool calling REST API) -->
+                            <path id="path-3" d="M280,240 L300,310" stroke="rgba(255,255,255,0.15)" stroke-width="2"
+                                fill="none" marker-end="url(#arrow)" />
+
+                            <!-- Path 4: WP -> CF (Flat database output) -->
+                            <path id="path-4" d="M290,310 L270,250" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"
+                                stroke-dasharray="3" fill="none" marker-end="url(#arrow)" />
+
+                            <!-- Path 5: LLM -> CF (Streaming response) -->
+                            <path id="path-5" d="M110,310 L130,250" stroke="rgba(255,255,255,0.15)" stroke-width="2"
+                                fill="none" marker-end="url(#arrow)" />
+
+                            <!-- Path 6: CF -> Browser (SSE stream) -->
+                            <path id="path-6" d="M180,170 L180,110" stroke="#10b981" stroke-width="2.5" fill="none"
+                                marker-end="url(#arrow-g)" />
+
+                            <!-- Markers definition -->
+                            <defs>
+                                <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6"
+                                    markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b" />
+                                </marker>
+                                <marker id="arrow-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6"
+                                    markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#8b5cf6" />
+                                </marker>
+                                <marker id="arrow-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6"
+                                    markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+                                </marker>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <span class="badge">FAQ</span>
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <p class="section-desc">Find answers to common questions about how the AI assistant works, its setup process, and costs.</p>
+                </div>
+                <div class="faq-grid">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How does this plugin work? Do I need to install any external software?</span>
+                            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                WooCommerce AI Sales Agent is a WordPress plugin running directly on your website. Just upload the plugin ZIP file, connect your OpenAI or Gemini API Key, and the AI will automatically learn your product data from your store's database and start assisting visitors immediately.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Do I have to pay a monthly subscription fee?</span>
+                            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                No. Unlike SaaS chatbot solutions (e.g., Tidio, Zendesk) that charge high monthly fees, you do not have to pay any monthly subscription fees. You only pay a cost-effective yearly license fee (only $49/year under the early bird offer) and have full control over your system. Your only other running cost is the pay-as-you-go API consumption charged by AI providers (like OpenAI or Gemini), which is extremely cheap (typically $0.001 - $0.002 per complete conversation).
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Does the AI make mistakes or give incorrect product prices?</span>
+                            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                No. The plugin is built to query your WooCommerce database in real-time. When shoppers ask about pricing, sizes, colors, or inventory status, the AI fetches live data directly from your store, eliminating product information "hallucinations".
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Are chat logs and customer data secure?</span>
+                            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Yes, completely secure. All chat logs and order details are saved directly inside your own WordPress MySQL database on your host/VPS. Additionally, the plugin features an automated PII filter that redacts sensitive information (like emails, phone numbers, and card details) before sending the text to AI models for processing.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Does the plugin support multiple languages well?</span>
+                            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Excellent. Leveraging advanced large language models, the AI agent understands context across various languages (English, Vietnamese, etc.) including abbreviations, slang, and typos. It responds naturally, helpfully, and persuasively like a human sales agent.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section" id="cta">
+            <div class="container">
+                <div class="cta-box">
+                    <h2>Ready to let AI handle your sales 24/7?</h2>
+                    <p>Setup in minutes on WooCommerce.<br>• No monthly fees.<br>• Unlimited visitors.<br>• Data hosted entirely on your site.</p>
+                    <div class="cta-buttons">
+                        <a href="https://snapabase.lemonsqueezy.com/checkout/buy/30cd3975-a224-4a17-909b-f1ea9eeff243" target="_blank" class="btn btn-primary">Buy Now</a>
+                        <a href="#simulator" class="btn btn-secondary">Try Live Demo</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-logo-desc">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12c0 1.86.5 3.61 1.39 5.11L2 22l5.09-1.37C8.54 21.13 10.21 21.5 12 21.5c5.52 0 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z" />
+                            </svg>
+                        </div>
+                        <span>WooCommerce AI Sales Agent</span>
+                    </a>
+                    <p>WooCommerce AI Sales Agent - The first self-hosted AI sales assistant running directly on WooCommerce storefronts.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Developers</h4>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Designed by VinhDQ & Google DeepMind team. Copyright 2026.</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 WooCommerce AI Sales Agent. All rights reserved.</p>
+                <div style="display:flex; gap: 16px;">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Floating Notification UI -->
+    <div class="cart-notification" id="cart-notif">
+        <svg viewBox="0 0 24 24">
+            <path
+                d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
+        </svg>
+        <span>Product added to cart!</span>
+    </div>
+
+    <!-- Script Logic -->
+    <script>
+        // Header scroll handler
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Architecture steps interactive logic
+        const archSteps = document.querySelectorAll('.arch-step-item');
+        const svgPaths = {
+            1: ['path-1'],
+            2: ['path-2', 'path-3'],
+            3: ['path-4'],
+            4: ['path-5', 'path-6']
+        };
+        const svgNodes = {
+            1: ['node-browser', 'node-cf'],
+            2: ['node-cf', 'node-llm', 'node-wp'],
+            3: ['node-wp'],
+            4: ['node-llm', 'node-cf', 'node-browser']
+        };
+
+        function highlightArchStep(stepNum) {
+            // Deactivate all steps
+            archSteps.forEach(item => item.classList.remove('active'));
+            // Activate selected step
+            const activeStep = document.querySelector(`.arch-step-item[data-step="${stepNum}"]`);
+            if (activeStep) activeStep.classList.add('active');
+
+            // Reset SVG elements styling
+            document.querySelectorAll('#arch-svg-diagram path').forEach(path => {
+                path.style.stroke = 'rgba(255, 255, 255, 0.15)';
+                path.style.strokeWidth = '2';
+            });
+            document.querySelectorAll('#arch-svg-diagram g').forEach(g => {
+                const rect = g.querySelector('rect');
+                if (rect) {
+                    if (g.id === 'node-cf') {
+                        rect.style.fillOpacity = '0.15';
+                        rect.style.stroke = '#8b5cf6';
+                    } else {
+                        rect.style.fill = '#1e293b';
+                        rect.style.stroke = 'rgba(255, 255, 255, 0.05)';
+                    }
+                }
+            });
+
+            // Highlight active paths and nodes
+            const pathsToHighlight = svgPaths[stepNum] || [];
+            pathsToHighlight.forEach(pathId => {
+                const path = document.getElementById(pathId);
+                if (path) {
+                    if (pathId === 'path-6') {
+                        path.style.stroke = '#10b981';
+                        path.style.strokeWidth = '3.5';
+                    } else {
+                        path.style.stroke = '#8b5cf6';
+                        path.style.strokeWidth = '3';
+                    }
+                }
+            });
+
+            const nodesToHighlight = svgNodes[stepNum] || [];
+            nodesToHighlight.forEach(nodeId => {
+                const node = document.getElementById(nodeId);
+                if (node) {
+                    const rect = node.querySelector('rect');
+                    if (rect) {
+                        if (nodeId === 'node-cf') {
+                            rect.style.fillOpacity = '0.4';
+                            rect.style.stroke = '#a78bfa';
+                        } else if (nodeId === 'node-browser') {
+                            rect.style.fill = '#2e3d56';
+                            rect.style.stroke = '#6366f1';
+                        } else {
+                            rect.style.fill = '#2e3d56';
+                            rect.style.stroke = '#8b5cf6';
+                        }
+                    }
+                }
+            });
+        }
+
+        // Add click listeners to architecture step items
+        archSteps.forEach(step => {
+            step.addEventListener('click', () => {
+                const stepNum = parseInt(step.getAttribute('data-step'), 10);
+                highlightArchStep(stepNum);
+            });
+        });
+
+        // Initialize active diagram state
+        highlightArchStep(1);
+
+        // FAQ Accordion Logic
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const questionBtn = item.querySelector('.faq-question');
+            questionBtn.addEventListener('click', () => {
+                const isOpen = item.classList.contains('open');
+                
+                // Close all other FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('open');
+                    }
+                });
+                
+                // Toggle current FAQ item
+                if (isOpen) {
+                    item.classList.remove('open');
+                } else {
+                    item.classList.add('open');
+                }
+            });
+        });
+
+
+        // --- Simulator Logic ---
+        const chatContainer = document.getElementById('sim-chat-container');
+        const chatInput = document.getElementById('sim-chat-input');
+        const chatSend = document.getElementById('sim-chat-send');
+        const scenButtons = document.querySelectorAll('.scenario-btn');
+        const cartNotif = document.getElementById('cart-notif');
+
+        // Products database
+        const mockProducts = {
+            esim_thai: {
+                id: 101,
+                title: "Thailand Travel eSIM 5G (Unlimited)",
+                price: "199.000đ",
+                imgStyle: "background-image: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);"
+            },
+            esim_japan: {
+                id: 102,
+                title: "Japan Travel eSIM 5G (5 Days)",
+                price: "280.000đ",
+                imgStyle: "background-image: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);"
+            },
+            esim_sing: {
+                id: 103,
+                title: "Singapore Travel eSIM 5G (7 Days)",
+                price: "250.000đ",
+                imgStyle: "background-image: linear-gradient(135deg, #34d399 0%, #059669 100%);"
+            }
+        };
+
+        // State trackers
+        let currentStep = 'none'; // 'waiting_email'
+        let selectedProduct = null;
+
+        // Show cart added notification
+        function triggerCartNotification(message = "Product added to cart!") {
+            cartNotif.querySelector('span').innerText = message;
+            cartNotif.classList.add('show');
+            setTimeout(() => {
+                cartNotif.classList.remove('show');
+            }, 2500);
+        }
+
+        // Append text message to simulator
+        function appendMessage(text, isIncoming = true) {
+            const msg = document.createElement('div');
+            msg.className = `sim-msg ${isIncoming ? 'incoming' : 'outgoing'}`;
+            msg.innerText = text;
+            chatContainer.appendChild(msg);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Show typing indicator
+        function showTypingIndicator() {
+            const indicator = document.createElement('div');
+            indicator.className = 'sim-msg incoming typing-indicator';
+            indicator.id = 'typing-indicator-node';
+            indicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatContainer.appendChild(indicator);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Remove typing indicator
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator-node');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        // Append Carousel UI Card
+        function appendProductCarousel(products) {
+            const carousel = document.createElement('div');
+            carousel.className = 'sim-carousel';
+
+            products.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'sim-product-card';
+                card.innerHTML = `
+                    <div class="sim-product-img" style="${p.imgStyle}"></div>
+                    <div class="sim-product-title">${p.title}</div>
+                    <div class="sim-product-price">${p.price}</div>
+                    <button class="sim-product-action" data-id="${p.id}">Buy now</button>
+                `;
+                // Add buy action click listener
+                card.querySelector('.sim-product-action').addEventListener('click', () => {
+                    triggerCartNotification(`Added ${p.title} to cart!`);
+                });
+                carousel.appendChild(card);
+            });
+
+            chatContainer.appendChild(carousel);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Append Combo Block UI Card
+        function appendComboBlock(comboTitle, comboDesc, products) {
+            // First append the product cards
+            appendProductCarousel(products);
+
+            // Then append the combo banner block
+            const comboBar = document.createElement('div');
+            comboBar.className = 'sim-combo-bar';
+            comboBar.innerHTML = `
+                <div class="sim-combo-info">
+                    <h5>${comboTitle}</h5>
+                    <p>${comboDesc}</p>
+                </div>
+                <button class="sim-combo-btn">Buy Combo 🚀</button>
+            `;
+
+            comboBar.querySelector('.sim-combo-btn').addEventListener('click', () => {
+                triggerCartNotification("Entire combo bundle added to cart!");
+            });
+
+            chatContainer.appendChild(comboBar);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Append Shipping tracking details UI
+        function appendTrackingInfo(orderId, email) {
+            const tracking = document.createElement('div');
+            tracking.className = 'sim-tracking-card';
+            tracking.innerHTML = `
+                <div class="sim-track-header">
+                    <span class="sim-track-id">Order #${orderId}</span>
+                    <span class="sim-track-status">In Transit</span>
+                </div>
+                <div class="sim-track-timeline">
+                    <div class="sim-track-node">
+                        <div class="sim-track-node-title">Order created successfully</div>
+                        <div class="sim-track-node-time">18/06/2026 09:30</div>
+                    </div>
+                    <div class="sim-track-node">
+                        <div class="sim-track-node-title">Handed over to carrier GHTK</div>
+                        <div class="sim-track-node-time">18/06/2026 14:15</div>
+                    </div>
+                    <div class="sim-track-node active">
+                        <div class="sim-track-node-title">Out for delivery. Driver: John Doe (0901-XXX-XXX)</div>
+                        <div class="sim-track-node-time">Today 08:00</div>
+                    </div>
+                </div>
+            `;
+            chatContainer.appendChild(tracking);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Run Scenario Actions
+        function runScenario(scenId) {
+            // Reset active scenario buttons
+            scenButtons.forEach(btn => btn.classList.remove('active'));
+            document.getElementById(scenId).classList.add('active');
+
+            // Clear chat body and add welcome message
+            chatContainer.innerHTML = '';
+            appendMessage("Welcome to WooCommerce AI Sales Agent! I am your AI assistant for looking up eSIM products and tracking order progress. How can I help you?");
+            currentStep = 'none';
+
+            if (scenId === 'scen-1') {
+                // Scenario 1: Search and buy eSIM
+                setTimeout(() => {
+                    appendMessage("Help me find an eSIM for traveling to Thailand.", false);
+                    showTypingIndicator();
+
+                    setTimeout(() => {
+                        removeTypingIndicator();
+                        appendMessage("I found some ultra-fast 5G eSIMs for Thailand. You can click buy directly on the cards below:");
+                        appendProductCarousel([mockProducts.esim_thai, mockProducts.esim_japan]);
+                    }, 1500);
+                }, 500);
+            }
+            else if (scenId === 'scen-2') {
+                // Scenario 2: Order tracking
+                setTimeout(() => {
+                    appendMessage("I want to check the status of order #1289.", false);
+                    showTypingIndicator();
+
+                    setTimeout(() => {
+                        removeTypingIndicator();
+                        appendMessage("To verify your identity, please enter the email address used during payment for order #1289.");
+                        currentStep = 'waiting_email';
+                        chatInput.placeholder = "e.g., shopper@gmail.com...";
+                        chatInput.focus();
+                    }, 1500);
+                }, 500);
+            }
+            else if (scenId === 'scen-3') {
+                // Scenario 3: Combo Builder recommendation
+                setTimeout(() => {
+                    appendMessage("I am going to travel around Southeast Asia. Do you have any budget-friendly bundle recommendations?", false);
+                    showTypingIndicator();
+
+                    setTimeout(() => {
+                        removeTypingIndicator();
+                        appendMessage("Excellent! If you're visiting Thailand & Singapore, I highly recommend our Southeast Asia eSIM Bundle. You'll save 15% compared to purchasing separately:");
+                        appendComboBlock(
+                            "Southeast Asia eSIM Travel Bundle 🚀",
+                            "Includes Thailand eSIM + Singapore eSIM. Buy the entire bundle to receive a 15% discount.",
+                            [mockProducts.esim_thai, mockProducts.esim_sing]
+                        );
+                    }, 1500);
+                }, 500);
+            }
+        }
+
+        // Add Click handlers to scenarios
+        scenButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                runScenario(btn.id);
+            });
+        });
+
+        // Initialize Chat send button
+        function handleUserMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            appendMessage(text, false);
+            chatInput.value = '';
+            showTypingIndicator();
+
+            setTimeout(() => {
+                removeTypingIndicator();
+
+                if (currentStep === 'waiting_email') {
+                    // Check if it's an email
+                    if (text.includes('@')) {
+                        appendMessage("Email verified! Querying shipment progress from GHTK carrier... Here is your tracking timeline:");
+                        appendTrackingInfo("1289", text);
+                        currentStep = 'none';
+                        chatInput.placeholder = "Type your message here...";
+                    } else {
+                        appendMessage("The email address format seems invalid. Please enter the email address used for payment again.");
+                        showTypingIndicator();
+                        setTimeout(() => {
+                            removeTypingIndicator();
+                        }, 500);
+                    }
+                }
+                else {
+                    // Fallback generic response based on text keywords
+                    const lowerText = text.toLowerCase();
+                    if (lowerText.includes('esim') || lowerText.includes('find') || lowerText.includes('buy') || lowerText.includes('purchase')) {
+                        appendMessage("Here are the featured eSIM products available in stock. Which country's plan do you need?");
+                        appendProductCarousel([mockProducts.esim_thai, mockProducts.esim_japan, mockProducts.esim_sing]);
+                    }
+                    else if (lowerText.includes('order') || lowerText.includes('track') || lowerText.includes('ship')) {
+                        appendMessage("To check shipping status, please provide your Order ID (e.g., #1289).");
+                    }
+                    else if (lowerText.includes('hello') || lowerText.includes('hi') || lowerText.includes('hey')) {
+                        appendMessage("Hello! I can help you search for high-speed 5G travel eSIMs and track order shipping. Which country's plan do you need?");
+                    }
+                    else {
+                        appendMessage("I have received your request. WooCommerce AI Sales Agent supports visual product search and automated shipping tracking. You can click on the sample scenarios on the left to see it in action!");
+                    }
+                }
+            }, 1200);
+        }
+
+        // Connect Send events
+        chatSend.addEventListener('click', handleUserMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleUserMessage();
+            }
+        });
+
+        // ROI Calculator Logic
+        const roiTrafficInput = document.getElementById('roi-traffic');
+        const roiCrInput = document.getElementById('roi-cr');
+        const roiAovInput = document.getElementById('roi-aov');
+
+        const valTraffic = document.getElementById('val-traffic');
+        const valCr = document.getElementById('val-cr');
+        const valAov = document.getElementById('val-aov');
+        const roiOutputVal = document.getElementById('roi-output-val');
+
+        function formatCurrency(number) {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(number);
+        }
+
+        function calculateROI() {
+            const traffic = parseInt(roiTrafficInput.value, 10);
+            const cr = parseFloat(roiCrInput.value) / 100;
+            const aov = parseInt(roiAovInput.value, 10);
+
+            // Update range labels
+            valTraffic.textContent = traffic.toLocaleString('en-US') + ' visitors';
+            valCr.textContent = (cr * 100).toFixed(1) + '%';
+            valAov.textContent = formatCurrency(aov);
+
+            // Calculation formula:
+            // Assuming ShopAgent AI increases conversion rate relative by 10% (i.e. +10% relative gain)
+            // Revenue_Gain = Daily_Traffic * 30 * AOV * (Current_CR * 0.1)
+            const revenueGain = traffic * 30 * aov * (cr * 0.1);
+            roiOutputVal.textContent = '+' + formatCurrency(Math.round(revenueGain));
+        }
+
+        if (roiTrafficInput) {
+            roiTrafficInput.addEventListener('input', calculateROI);
+            roiCrInput.addEventListener('input', calculateROI);
+            roiAovInput.addEventListener('input', calculateROI);
+            // Run initial calculate
+            calculateROI();
+        }
+
+        // Initialize First Scenario
+        runScenario('scen-1');
+    </script>
+</body>
+
+</html>
